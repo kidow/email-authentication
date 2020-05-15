@@ -1,12 +1,14 @@
 <template>
   <div class="container">
     <div>
-      <h1 class="title">ivory</h1>
+      <h1 class="title">이메일 링크 로그인</h1>
       <h2 class="subtitle">Email Authentication</h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">Documentation</a>
-        <a href="https://github.com/nuxt/nuxt.js" target="_blank" class="button--grey">GitHub</a>
-      </div>
+      <h3 v-if="isLoggedIn">로그인에 성공했습니다.</h3>
+      <h3 v-else>아직 로그인 상태가 아닙니다.</h3>
+      <input v-if="!isLoggedIn" type="email" placeholder="email" autofocus v-model="email" />
+      <button v-if="isLoggedIn" @click="logout">로그아웃</button>
+      <button v-else @click="login">링크 전송</button>
+      <div v-if="error" style="color: red; padding-top: 1rem">{{ error }}</div>
     </div>
   </div>
 </template>
@@ -15,7 +17,23 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-  components: {}
+  data: () => ({
+    isLoggedIn: false,
+    email: '',
+    error: ''
+  }),
+  methods: {
+    async loginCheck() {
+      console.log('login check!')
+    },
+    async logout() {},
+    async login() {
+      if (!this.email) return (this.error = '올바른 이메일을 입력해주세요.')
+    }
+  },
+  mounted() {
+    this.loginCheck()
+  }
 })
 </script>
 
@@ -47,7 +65,12 @@ export default Vue.extend({
   padding-bottom: 15px;
 }
 
-.links {
-  padding-top: 15px;
+input {
+  font-size: 1rem;
+}
+
+button {
+  padding: 0.5rem;
+  font-size: 1rem;
 }
 </style>

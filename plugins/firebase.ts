@@ -20,31 +20,21 @@ declare module 'vuex/types/index' {
   }
 }
 
-const FirePlugin: Plugin = ({ env }, inject) => {
-  const {
-    FIREBASE_API_KEY,
-    FIREBASE_AUTH_DOMAIN,
-    FIREBASE_DATABASE_URL,
-    FIREBASE_PROJECT_ID,
-    FIREBASE_STORAGE_BUCKET,
-    FIREBASE_MESSAGING_SENDER_ID,
-    FIREBASE_APP_ID,
-    FIREBASE_MEASUREMENT_ID
-  } = env
+const FirebasePlugin: Plugin = ({ env }, inject) => {
   if (!firebase.apps.length) {
     const config = {
-      apiKey: FIREBASE_API_KEY,
-      authDomain: FIREBASE_AUTH_DOMAIN,
-      databaseURL: FIREBASE_DATABASE_URL,
-      projectId: FIREBASE_PROJECT_ID,
-      storageBucket: FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
-      appId: FIREBASE_APP_ID,
-      measurementId: FIREBASE_MEASUREMENT_ID
+      apiKey: env.FIREBASE_API_KEY,
+      authDomain: env.FIREBASE_AUTH_DOMAIN,
+      databaseURL: env.FIREBASE_DATABASE_URL,
+      projectId: env.FIREBASE_PROJECT_ID,
+      storageBucket: env.FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: env.FIREBASE_MESSAGING_SENDER_ID,
+      appId: env.FIREBASE_APP_ID,
+      measurementId: env.FIREBASE_MEASUREMENT_ID
     }
     firebase.initializeApp(config)
   }
   inject('auth', firebase.auth)
 }
 
-export default FirePlugin
+export default FirebasePlugin
